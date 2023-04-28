@@ -1,0 +1,8 @@
+{
+  "dependencies": {
+    "bcrypt": "^5.1.0",
+    "jwt-decode": "^3.1.2",
+    "moment": "^2.29.4",
+    "react-big-calendar": "^1.6.9"
+  }
+}
