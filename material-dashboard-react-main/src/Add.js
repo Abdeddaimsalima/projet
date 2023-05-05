@@ -12,6 +12,11 @@ import 'react-toastify/dist/ReactToastify.css';
 import InputLabel from '@mui/material/InputLabel';
 import TableContainer from "@mui/material/TableContainer";
 import FormControl from "@mui/material/FormControl"
+import DashboardNavbar from "examples/Navbars/DashboardNavbar";
+import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
+import MDTypography from "components/MDTypography";
+
+
 
 function Add() {
  const [nameError, setNameError] = useState(false);
@@ -19,7 +24,7 @@ function Add() {
   const [passwordError, setPasswordError] = useState(false);
 
   const [roles, setRoles] = useState([]);
-  const [selectedRole, setSelectedRole] = useState("medecin");
+  const [selectedRole, setSelectedRole] = useState("");
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('')
@@ -104,116 +109,102 @@ function Add() {
   };
   const isSubmitDisabled = !name || !email || !password;
   return (
-    
-    <div className="add">
-      
-      <ToastContainer />
-      <MDButton
-    variant="gradient"
-    color="info"
-    style={{
-    position: "absolute",
-    top: "2rem",
-    right: "2rem",
-    background: "grey",
-    marginBottom: "10px"
-         }}
-    component={Link}
-    to="/Ajouterrole"
-     >
-     add role
-     </MDButton>
-      <div className="Table" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '600px' }}>
-    
-      <TableContainer style={{ width: '30%', marginRight:"10px" }}>
-        <MDBox pt={4} pb={3} px={3}>
-          <MDBox component="form" role="form">
-      
-          <MDBox mb={2}>
-            <MDInput
-          type="text"
-          label="Name"
-          variant="standard"
-          fullWidth
-          value={name}
-          onChange={(e) => {
-            setName(e.target.value);
-            setNameError(false);
+    <DashboardLayout>
+      <DashboardNavbar />
+    <ToastContainer />
+    <div style={{width: "70%" , borderRadius: "10px",backgroundColor:"white", marginLeft: "auto", marginRight: "auto",marginTop:"30px"}}>
+    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+  <MDTypography variant="h4" gutterBottom padding="30px">
+    Ajouter utilisateur 
+  </MDTypography>
+  <MDButton variant="gradient" color="info" style={{ background: "grey", marginBottom: "10px", marginRight: "20px" }} component={Link} to="/Ajouterrole">
+    add role
+  </MDButton>
+</div>
+
+<form>
+ <MDInput
+   label="Nom"
+           type="text"
+           name="dateconsultation"
+           id="dateconsultation"
+           InputLabelProps={{
+            shrink: true,
           }}
-          
-          error={nameError}
-          helperText={nameError ? "This field is required" : ""}
+           value={name}
+           onChange={(e) => {
+            setName(e.target.value);
+           
+          }}
+           margin="normal"
+           style={{width:"80%",marginLeft:"60px"}}
          />
-         </MDBox>
-           <MDBox mb={2}>
-            <MDInput
-          type="text"
-          label="Email"
-          variant="standard"
-          fullWidth
+          <MDInput
+   label="Email"
+           type="text"
+           name="email"
+           id="email"
+           InputLabelProps={{
+            shrink: true,
+          }}
           value={email}
           onChange={(e) => {
             setEmail(e.target.value);
-            setEmailError(false);
+            
           }}
-          error={emailError}
-          helperText={emailError ? "This field is required" : ""}
+           margin="normal"
+           style={{width:"80%",marginLeft:"60px"}}
          />
-            </MDBox>
-
-            <MDBox mb={2}>
-             <MDInput
-          type="password"
-          label="Password"
-          variant="standard"
-          fullWidth
+            <MDInput
+   label="mot de passe"
+           type="password"
+           name="mot de passe"
+           id="mot de passe "
+           InputLabelProps={{
+            shrink: true,
+          }}
           value={password}
           onChange={(e) => {
             setPassword(e.target.value);
-            setPasswordError(false);
-          }}
-          error={passwordError}
-          helperText={passwordError ? "This field is required" : ""}
-         />
-          <MDBox mb={2}>
-       <Select
-          value={selectedRole}
-          onChange={handleRoleChange}
-          style={{ marginTop: "2rem" }}
-          label={
-          <InputLabel id="role-label">Role</InputLabel>
-          }
-          >
-        
-           {roles.map((role) => (
-           <MenuItem key={role.id} value={role.role}>
-          {role.role}
-          </MenuItem>
-           ))}
-           </Select>
-           </MDBox>
-            </MDBox>
-
-            <MDBox display="flex" alignItems="center" ml={-1}>
            
-            </MDBox>
-            <MDBox mt={4} mb={1}>
-              <MDButton variant="gradient" color="info" fullWidth style={{marginBottom:"10px"}} onClick={register} component={Link} to="/Ajouteruser"  disabled={isSubmitDisabled}>
-                add
+          }}
+           margin="normal"
+           style={{width:"80%",marginLeft:"60px"}}
+         />
+  <select
+                id="role"
+                name="role"
+                value={selectedRole}
+                onChange={handleRoleChange}
+                style={{
+                  color: 'black',
+                  border: '2px solid blue',
+                  borderRadius: '5px',
+                  padding: '10px',
+                  flex: 2,
+                  width:"80%",
+                  marginTop:"10px",
+                  marginLeft:"60px"
+                }}
+              >
+                 <option value="">-- Choisissez un role --</option>
+                {roles.map((role) => (
+                  <option key={role.id} value={role.role}>
+                    {role.role}
+                  </option>
+                ))}
+              </select>
+              <div style={{display: 'flex',justifyContent:'flex-end',padding:"20px"}}>
+              <MDButton variant="gradient" color="info"  onClick={register} component={Link} to="/Ajouteruser"  disabled={isSubmitDisabled}>
+                ajouter
               </MDButton> 
-              <MDButton variant="gradient" color="error" fullWidth  component={Link} to="/Ajouteruser" >
+              <MDButton variant="gradient" color="error"   component={Link} to="/Ajouteruser" style={{marginLeft:"10px"}}>
                 cancel
               </MDButton>
-              
-            </MDBox>
-           
-          </MDBox>
-        </MDBox>
-      </TableContainer>
-     </div>
-    
-    </div>
-
+        </div>
+         </form>
+  </div>
+    </DashboardLayout>
   );
 }
 

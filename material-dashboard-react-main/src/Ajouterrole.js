@@ -44,52 +44,66 @@ const Ajouterrole = () => {
   const handleNewRoleChange = (event) => {
     setNewRole(event.target.value);
   }
-  return (      
+  return (
     <DashboardLayout>
-    <DashboardNavbar />
-    <div style={{
-          display: 'flex',
-          alignItems: 'center',
-          background: 'white',
-          padding: '20px',
-          marginTop: '10px',
-          borderRadius: '5px',
-          boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.1)',
-        }}>
-          <MDTypography variant="h3" fontWeight="medium" style={{ marginRight: '10px' }}>
-            Liste
-          </MDTypography>
-          <MDTypography variant="h3" fontWeight="medium">
-           des roles
-          </MDTypography>
-          <form onSubmit={(e) => { e.preventDefault(); addRole(); }}>
-          
-           
-            <MDInput type="text" value={newRole} onChange={handleNewRoleChange} style={{  marginRight: "10px" ,marginLeft: '640px'}}/>
-         
-          <MDButton type="submit"  variant="contained" color="primary">Ajouter</MDButton>
+      <DashboardNavbar />
+      <div style={{
+        display: 'flex',
+        alignItems: 'center',
+        background: 'white',
+        padding: '20px',
+        marginTop: '20px',
+        borderRadius: '5px',
+        boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.1)',
+      }}>
+        <MDTypography variant="h3" fontWeight="medium" style={{ marginRight: '10px' }}>
+          Liste
+        </MDTypography>
+        <MDTypography variant="h3" fontWeight="medium">
+          des roles
+        </MDTypography>
+        <form onSubmit={(e) => { e.preventDefault(); addRole(); }}>
+
+
+          <input
+            placeholder="Entrer un role"
+            type="text"
+            value={newRole}
+            onChange={handleNewRoleChange}
+            style={{
+              background: "white",
+              color: "black",
+              border: "2px solid blue",
+              borderRadius: "5px",
+              padding: "10px",
+              flex: 2,
+              marginRight: '10px',
+              marginLeft: '640px',
+            }} />
+
+          <MDButton type="submit" variant="contained" color="primary">Ajouter</MDButton>
         </form>
-        
-        </div>
-        <TableContainer style={{ width: '90%', marginTop: '50px', marginRight:'20px',marginLeft:"50px" }}>
-  <Table >
-    <TableHead>
-      <TableRow>
-        <TableCell >role</TableCell>
-        <TableCell style={{paddingLeft:"100px"}} >Actions</TableCell>
-      </TableRow>
-    </TableHead>
-    <TableBody>
-      {roles.map((role) => (
-        <TableRow key={role.id}>
-          <TableCell>{role.role}</TableCell>
-          <TableCell ><MDButton variant="contained" color="info" style={{marginRight:"10px"}}>modifier</MDButton>
-         <MDButton variant="contained" color="error">supprimer</MDButton></TableCell>
-        </TableRow>
-      ))}
-    </TableBody>
-  </Table>
-</TableContainer>
+
+      </div>
+      <TableContainer style={{ width: '100%', marginTop: "20px" }}>
+        <Table >
+          <TableBody>
+            <TableRow>
+              <TableCell style={{ fontWeight: "bold" }}>Role</TableCell>
+              <TableCell style={{ fontWeight: "bold" }}>Actions</TableCell>
+            </TableRow>
+
+
+            {roles.map((role) => (
+              <TableRow key={role.id}>
+                <TableCell>{role.role}</TableCell>
+                <TableCell ><MDButton variant="contained" color="info" style={{ marginRight: "10px" }}>modifier</MDButton>
+                  <MDButton variant="contained" color="error">supprimer</MDButton></TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
 
 
 

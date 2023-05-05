@@ -1,5 +1,5 @@
 import MDButton from "components/MDButton";
-import { useNavigate,Link ,useParams} from "react-router-dom";
+import { useNavigate, Link, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import Axios from "axios";
 import VisibilityIcon from '@mui/icons-material/Visibility';
@@ -20,88 +20,98 @@ import TableCell from "@mui/material/TableCell";
 import TableHead from "@mui/material/TableHead";
 import MDBox from "components/MDBox";
 import { width } from "@mui/system";
+
 const Details = () => {
-    const [patients, setPatients] = useState([]);
-    const { id } = useParams();
-    useEffect(() => {
+  const navigate = useNavigate();
+  const [patients, setPatients] = useState([]);
+  const { id } = useParams();
+  useEffect(() => {
 
-      const getPatient = () => {
-        Axios.get(`http://localhost:8000/details/${id}`).then((res) => {
-          console.log('detailspatient', res);
-          setPatients(res.data);
-        });
-      };
-    
-        getPatient();
-    
-      }, []);
+    const getPatient = () => {
+      Axios.get(`http://localhost:8000/details/${id}`).then((res) => {
+        console.log('detailspatient', res);
+        setPatients(res.data);
+      });
+    };
 
-      const handleBilaninitialeClick = (id) => {
-        navigate(`/Bilaninitiale/${id}`);
-      };
-     
-      return (    
-        <DashboardLayout style={{ height: '100vh', overflowY: 'scroll' }}>
-        {patients.map(patient => (
-          <div key={patient.id} className="patient-container">
-            <div  style={{marginTop: "10px"}}></div>
-         <TableContainer style={{marginBottom:'50px',width:'100%', margin:'auto', display:'block'}}>
-  <h2 style={{color:'blue', fontSize:'24px', padding:'10px', marginLeft:'10px'}}>informations du patient : </h2>
-</TableContainer>
-<div  style={{marginTop: "20px"}}></div>
-<TableContainer style={{marginBottom:'10px',width:'100%', margin:'auto', display:'block'}}>
-<Table style={{tableLayout: 'fixed'}}>
-    <TableBody>
-      <TableRow>
-        <TableCell style={{width: '40%'}}><strong>Numero :</strong></TableCell>
-        <TableCell style={{width: '60%'}}>{patient.numeroPatient}</TableCell>
-      </TableRow>
-      <TableRow>
-<TableCell>
-  <strong>Nom et Prenom</strong>
-</TableCell>
-<TableCell>{patient.nomPatient} {patient.prenomPatient}</TableCell>
-      </TableRow>
-                  <TableRow>
+    getPatient();
+
+  }, []);
+
+  const handleBilaninitialeClick = (idpatient) => {
+    navigate(`/Bilaninitiale/${idpatient}`);
+  };
+  const handleBilanSuivieClick = (id) => {
+    navigate(`/BilanSuivie/${id}`);
+  };
+
+  return (
+    <DashboardLayout >
+      {patients.map(patient => (
+        <div key={patient.id} className="patient-container">
+          <div style={{ marginTop: "10px" }}></div>
+          <TableContainer style={{ marginBottom: '50px', width: '100%', margin: 'auto', display: 'block' }}>
+            <h2 style={{ color: 'blue', fontSize: '24px', padding: '20px', marginLeft: '10px' }}>Informations du patient : </h2>
+          </TableContainer>
+          <div style={{ marginTop: "20px" }}></div>
+          <TableContainer style={{ marginBottom: '10px', width: '100%', margin: 'auto', display: 'block' }}>
+            <Table style={{ tableLayout: 'fixed' }}>
+              <TableBody>
+                <TableRow>
+                  <TableCell style={{ width: '40%' }}><strong>Numero :</strong></TableCell>
+                  <TableCell style={{ width: '60%' }}>{patient.numeroPatient}</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell>
+                    <strong>Nom et Prenom</strong>
+                  </TableCell>
+                  <TableCell>{patient.nomPatient} {patient.prenomPatient}</TableCell>
+                </TableRow>
+                <TableRow>
                   <TableCell><strong>Date de naissance :</strong></TableCell>
-                    <TableCell>{patient.date_naissance}</TableCell>
-                  </TableRow>
-                  <TableRow>
+                  <TableCell>{patient.date_naissance}</TableCell>
+                </TableRow>
+                <TableRow>
                   <TableCell><strong>Adresse :</strong></TableCell>
-                    <TableCell>{patient.adresse}</TableCell>
-                  </TableRow>
-                  <TableRow>
+                  <TableCell>{patient.adresse}</TableCell>
+                </TableRow>
+                <TableRow>
                   <TableCell><strong>Numero de telephone:</strong></TableCell>
-                    <TableCell>{patient.numtelephone}</TableCell>
-                  </TableRow>
-                  <TableRow>
+                  <TableCell>{patient.numtelephone}</TableCell>
+                </TableRow>
+                <TableRow>
                   <TableCell><strong>Sexe :</strong></TableCell>
-                    <TableCell>{patient.sexe}</TableCell>
-                  </TableRow>
-                  <TableRow>
-                  <TableCell><strong>Situation familiale :</strong></TableCell>             
-                         <TableCell>{patient.situationfamiliale}</TableCell>
-                  </TableRow>
-                  <TableRow>
+                  <TableCell>{patient.sexe}</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell><strong>Situation familiale :</strong></TableCell>
+                  <TableCell>{patient.situationfamiliale}</TableCell>
+                </TableRow>
+                <TableRow>
                   <TableCell><strong>Antecedants medicaux :</strong></TableCell>
-                    <TableCell>{patient.antécédentsmedicaux}</TableCell>
-                  </TableRow>
-                  <MDButton variant="gradient" color="info" style={{ marginLeft: '10px'  }}  
-            >
+                  <TableCell>{patient.antécédentsmedicaux}</TableCell>
+                </TableRow>
+                <TableCell></TableCell>
+                <TableCell>
+                  <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+                    <MDButton variant="gradient" color="info" style={{ marginRight: '10px' }} onClick={() => handleBilaninitialeClick(patient.id)}
+                    >
                       Bilan initiale
-</MDButton>
-<MDButton variant="gradient" color="info" style={{ marginLeft: '10px' }}  
-            >
+                    </MDButton>
+                    <MDButton variant="gradient" color="info" style={{ marginRight: '10px' }} onClick={() => handleBilanSuivieClick(patient.id)}
+                    >
                       Bilan suivie
-</MDButton>
-                </TableBody>
-              </Table>
-            </TableContainer>
-          </div>
-        ))}
-      </DashboardLayout>               
-      );
-         
+                    </MDButton>
+                  </div>
+                </TableCell>
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </div>
+      ))}
+    </DashboardLayout>
+  );
+
 }
- 
+
 export default Details;

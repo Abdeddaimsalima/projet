@@ -67,6 +67,7 @@ function Basic() {
             console.log(decodedToken); ///
             if (decodedToken.role === 'admin') {
               console.log('The user is an admin!');
+              
             }
           } catch (error) {
             console.log('Error decoding token:', error);

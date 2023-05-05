@@ -1,7 +1,7 @@
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 
 import MDButton from "components/MDButton";
-import { useNavigate,Link ,useParams} from "react-router-dom";
+import { useNavigate, Link, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import Axios from "axios";
 
@@ -20,6 +20,8 @@ import Table from "@mui/material/Table";
 import TableCell from "@mui/material/TableCell";
 import TableHead from "@mui/material/TableHead";
 import MDBox from "components/MDBox";
+import DashboardNavbar from "examples/Navbars/DashboardNavbar";
+
 
 const notifySuccess = () => {
   toast.success("L'utilisateur a été supprimé avec succès !");
@@ -31,7 +33,7 @@ const notifyError = () => {
 
 
 
-const Ajouteruser = function() {
+const Ajouteruser = function () {
   const [users, setUsers] = useState([]);
   const [lastId, setLastId] = useState(0);
 
@@ -50,9 +52,9 @@ const Ajouteruser = function() {
           setUsers(res.data);
 
 
-          if (res.data.length>0){
+          if (res.data.length > 0) {
 
-            setLastId(res.data[Response.data.length -1].id)
+            setLastId(res.data[Response.data.length - 1].id)
           }
         })
 
@@ -62,45 +64,45 @@ const Ajouteruser = function() {
 
   }, []);
 
-    
-
-      const { id } = useParams();
-      const [name, setName] = useState('');
-      const [email, setEmail] = useState('');
-      const [password, setPassword] = useState('');
-      const [idrole, setIdrole] = useState('');
-      const navigate = useNavigate();
-      const [updatedUser, setUpdatedUser] = useState(false);
 
 
-
-      
-     
-
-      const handleUpdateClick = (id) => {
-        navigate(`/Ajouteruser/update/${id}`);
-      };
-     
+  const { id } = useParams();
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [idrole, setIdrole] = useState('');
+  const navigate = useNavigate();
+  const [updatedUser, setUpdatedUser] = useState(false);
 
 
 
-      const handleDelete = (id) => {
-        if (window.confirm("Are you sure you want to delete this user?")) {
-          Axios.delete(`http://localhost:8000/Ajouteruser/${id}`, {
-            headers: {
-              Authorization: `Bearer ${localStorage.getItem("token")}`,
-            },
-          })
-            .then((res) => {
-              setUsers(users.filter((user) => user.id !== id));
-              notifySuccess();
-            })
-            .catch((err) => {
-              console.log(err);
-              notifyError();
-            });
-        }
-      };
+
+
+
+  const handleUpdateClick = (id) => {
+    navigate(`/Ajouteruser/update/${id}`);
+  };
+
+
+
+
+  const handleDelete = (id) => {
+    if (window.confirm("Are you sure you want to delete this user?")) {
+      Axios.delete(`http://localhost:8000/Ajouteruser/${id}`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      })
+        .then((res) => {
+          setUsers(users.filter((user) => user.id !== id));
+          notifySuccess();
+        })
+        .catch((err) => {
+          console.log(err);
+          notifyError();
+        });
+    }
+  };
 
 
   const handleAdd = () => {
@@ -130,17 +132,18 @@ const Ajouteruser = function() {
   const filteredUsers = users.filter((user) =>
     user.name.toLowerCase().includes(searchQuery.toLowerCase())
   );
-  
+
   return (
     <DashboardLayout style={{ height: '100vh', overflowY: 'scroll' }}>
       <ToastContainer />
+      <DashboardNavbar />
       <div className="UserList" style={{ height: '700px' }}>
         <div style={{
           display: 'flex',
           alignItems: 'center',
           background: 'white',
           padding: '20px',
-          marginTop: '10px',
+          marginTop: '20px',
           borderRadius: '5px',
           boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.1)',
         }}>
@@ -154,7 +157,7 @@ const Ajouteruser = function() {
             type="text"
             value={searchQuery}
             onChange={(event) => setSearchQuery(event.target.value)}
-            placeholder="Search by name"
+            placeholder="chercher par nom"
             style={{
               background: "white",
               color: "black",
@@ -163,7 +166,7 @@ const Ajouteruser = function() {
               padding: "10px",
               flex: 2,
               marginRight: '10px',
-              marginLeft: '600px',
+              marginLeft: '550px',
             }}
           />
           <MDButton
@@ -176,54 +179,54 @@ const Ajouteruser = function() {
             Add user
           </MDButton>
         </div>
-        <div className="Table" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center',  marginTop: '40px' }}>
-          <div style={{ maxWidth: '1200px' }}>
-            <TableContainer style={{ width: '100%', margin: 'auto' }}>
-              <Table style={{ tableLayout: 'fixed' }}>
-        <TableHead>
-  <TableRow>
-    <TableCell align="left"   style={{  paddingLeft: '1px' }}>Id</TableCell>
-    <TableCell align="center" style={{ paddingLeft: '210px'}}>Name</TableCell>
-    <TableCell align="center" style={{  paddingLeft: '180px'}}>Email</TableCell>
-    <TableCell align="center" style={{ paddingLeft: '180px'}}>Role</TableCell>
-    <TableCell align="center" style={{ paddingLeft: '260px'}}>Action</TableCell>
-  </TableRow>
-</TableHead>
-    <TableBody>
-      {filteredUsers.map((user) => (
-        <TableRow key={user.id}>
-          <TableCell align="left" style={{ width: '25%' }}>{user.id}</TableCell>
-          <TableCell align="left" style={{ width: '25%' }}>{user.name}</TableCell>
-          <TableCell align="left" style={{ width: '25%' }}>{user.email}</TableCell>
-          <TableCell align="left" style={{ width: '25%' }}>{user.role}</TableCell>
-         
-          <TableCell>
-            <MDBox display="flex" alignItems="center" mt={{ xs: 2, sm: 0 }} ml={{ xs: -1.5, sm: 0 }}>
-              <MDBox mr={1}>  
-                <MDButton variant="text" color="success" onClick={() => handleUpdateClick(user.id)}>
-                  <Icon>edit</Icon>&nbsp;edit
-                </MDButton>
-              </MDBox>
-              <MDButton variant="text" color="error" onClick={() => handleDelete(user.id)}>
-                <Icon>delete</Icon>&nbsp;delete
-              </MDButton>
-            </MDBox>
-          </TableCell>
-        </TableRow>
-      ))}
-    </TableBody>
-  </Table>
-</TableContainer>
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+
+          <TableContainer style={{ marginTop: "20px" }}>
+            <Table className="table">
+              <TableBody>
+                <TableRow>
+                  <TableCell style={{ fontWeight: 'bold' }}>Id</TableCell>
+                  <TableCell style={{ fontWeight: 'bold' }}>Nom</TableCell>
+                  <TableCell style={{ fontWeight: 'bold' }}>Email</TableCell>
+                  <TableCell style={{ fontWeight: 'bold' }}>Role</TableCell>
+                  <TableCell style={{ fontWeight: 'bold' }}>Action</TableCell>
+                </TableRow>
+
+
+                {filteredUsers.map((user) => (
+                  <TableRow key={user.id}>
+                    <TableCell align="left" style={{ width: '25%' }}>{user.id}</TableCell>
+                    <TableCell align="left" style={{ width: '25%' }}>{user.name}</TableCell>
+                    <TableCell align="left" style={{ width: '25%' }}>{user.email}</TableCell>
+                    <TableCell align="left" style={{ width: '25%' }}>{user.role}</TableCell>
+
+                    <TableCell>
+                      <MDBox display="flex" alignItems="center" mt={{ xs: 2, sm: 0 }} ml={{ xs: -1.5, sm: 0 }}>
+                        <MDBox mr={1}>
+                          <MDButton variant="text" color="success" onClick={() => handleUpdateClick(user.id)}>
+                            <Icon>edit</Icon>&nbsp;modifier
+                          </MDButton>
+                        </MDBox>
+                        <MDButton variant="text" color="error" onClick={() => handleDelete(user.id)}>
+                          <Icon>delete</Icon>&nbsp;supprimer
+                        </MDButton>
+                      </MDBox>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
 
 
 
 
 
 
-   </div>
- </div>
-        
+        </div>
       </div>
+
+
 
     </DashboardLayout>
   );

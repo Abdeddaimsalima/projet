@@ -17,7 +17,7 @@ const AfficherRdv = () => {
       .then((res) => {
         const events = res.data.map((appointment) => ({
           id: appointment.id,
-          title: "Nouveau rendez-vous",
+          title: "salima ",
           start: moment.utc(
             appointment.date + 'T' + appointment.heuredebut,
             'YYYY-MM-DDTHH:mm:ss'
@@ -37,7 +37,7 @@ const AfficherRdv = () => {
 
   return (
     <DashboardLayout >
-      <DashboardNavbar />
+   
 
     <div>
     <Calendar

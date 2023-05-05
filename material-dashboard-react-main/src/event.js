@@ -48,11 +48,7 @@ const Events = () => {
     <table style={{ width: '100%' }}>
         {events.map( event => (
           <div key={event.id} className="patient-container">
-           
-        
-
-             
-                <TableBody>
+           <TableBody>
                   <TableRow>
                     <TableCell>date</TableCell>
                     <TableCell>{event.date}</TableCell>
@@ -76,13 +72,15 @@ const Events = () => {
                   <TableRow>
                     <TableCell></TableCell>
 
-  <TableCell style={{ display: 'flex', justifyContent: 'flex-end',marginRight:'10px' }}>
+  <TableCell >
+  <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
   <MDButton style={{marginRight:'10px'}} variant="gradient" color="info" onClick={() => handleUpdateEventClick(event.id)}>
      modifier
     </MDButton>
     <MDButton variant="gradient" color="error" onClick={() => handleDelete(event.id)}>
       supprimer
     </MDButton>
+    </div>
   </TableCell>
 </TableRow>  
   </TableBody>

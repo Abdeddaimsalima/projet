@@ -32,6 +32,8 @@ import AjouterQuestion from "AjouterQuestion";
 import Déconnexion from "Déconnexion";
 import BilanInitiale from "BilanInitiale";
 import BilanSuivie from "BilanSuivie";
+import Examens from "Examens";
+import ExamenPatient from "examenpatient";
 const routes = [
   {
     type: "collapse",
@@ -172,14 +174,25 @@ const routes = [
   },
   {
     key: "BilanInitiale",
-    route: "/BilanInitiale",
+    route: "/Bilaninitiale/:idpatient",
     component: <BilanInitiale />,
   },
   {
     key: "BilanSuivie",
-    route: "/BilanSuivie",
+    route: "/BilanSuivie/:idpatient",
     component: <BilanSuivie />,
   },
+  {
+    key: "Examens",
+    route: "/Examens/:idpatient/:id",
+    component: <Examens />,
+  },
+  {
+    key: "ExamenPatient",
+    route: "/ExamenPatient/:id",
+    component: <ExamenPatient />,
+  },
+
   {
     type: "collapse",
     name: "Déconnexion",
@@ -188,6 +201,6 @@ const routes = [
     route: "/authentication/sign-out",
     component: <Déconnexion />,
   }
-  
+
 ];
 export default routes;

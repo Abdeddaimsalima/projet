@@ -133,7 +133,7 @@ const Examen = () => {
   <TableCell style={{fontWeight: 'bold'}}> Action </TableCell>
 </TableRow>
         {filteredExamens.map((examen) => (
-          <TableRow key={examen.id} className={examen.id % 2 === 0 ? 'grey' : 'white'}>
+          <TableRow key={examen.id} >
             <TableCell>{examen.libelle}</TableCell>
             <TableCell>{examen.type}</TableCell>
             <TableCell>
@@ -147,5 +147,7 @@ const Examen = () => {
     </Table>
   </TableContainer>
 </div>
-    </DashboardLayout> );}
+    </DashboardLayout> 
+    );
+  }
 export default Examen;
